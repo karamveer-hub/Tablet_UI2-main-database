@@ -21,8 +21,8 @@ let feedback_emoji = document.querySelectorAll(".feedback_redirect")
 let feeback_img_outline = document.querySelectorAll(".feeback_img_outline")
 let ciagrette_feedback_name = document.querySelector("#ciagrette_feedback_name")
 
-let user_name_data=document.querySelector("#user_name")
-let user_number_data=document.querySelector("#user_number")
+let user_name_data = document.querySelector("#user_name")
+let user_number_data = document.querySelector("#user_number")
 
 //declaring variable for storing user data
 let user_feed;
@@ -36,13 +36,14 @@ var feeback_page_emoji;
 
 
 //clicking functionalty for selecting one ciagrette and storing the name of ciagrette
-
-let click = 0;
+var bool=false;
+let click =0 ;
 feeback_img_outline.forEach(elem => {
     elem.addEventListener("click", (e) => {
         e.preventDefault()
         user_ciagrette_name = elem.alt                     //storing ciagrette name of the customer
         if (click == 0 || click < 1) {
+            bool=true;
             click++;
             elem.classList.add("outline_selected")
             ciagrette_feedback_name.innerText = `B. How was your experience smoking
@@ -50,10 +51,17 @@ feeback_img_outline.forEach(elem => {
         }
         else {
             if (click == 1) {
+
                 if (elem.classList.contains("outline_selected")) {
-                    click--;
-                    elem.classList.remove("outline_selected")
-                    ciagrette_feedback_name.innerText = "B. How was your experience smoking?"
+                }
+                else {
+                    for (let i = 0; i < feeback_img_outline.length; i++) {
+                        feeback_img_outline[i].classList.remove("outline_selected")
+                    }
+                    bool=true;
+                    elem.classList.add("outline_selected")
+                    ciagrette_feedback_name.innerText = `B. How was your experience smoking
+                     ${elem.alt}? `
                 }
             }
         }
@@ -90,30 +98,50 @@ feed_yes.forEach(elem => {
 // getting customer info by clicking
 shopping_experience.forEach(elem => {
     elem.addEventListener("click", (e) => {
-        user_shopping_experience = elem.children[0].alt;
+        if (elem.classList.contains("emojiTransform")) {
+         user_shopping_experience=elem.children[0].alt
+        }
+        else {
+            for (let i = 0; i < shopping_experience.length; i++) {
+                shopping_experience[i].classList.remove("emojiTransform")
+            }
+            elem.classList.add("emojiTransform")
+            user_shopping_experience=elem.children[0].alt
+        }
+
     })
 })
 
 
 feedback_emoji.forEach(elem => {
     elem.addEventListener("click", (e) => {
-        feeback_page_emoji = elem.children[0].alt
-        feedback_page_hide.classList.toggle("show")        //merging feedback and tellus_more_page as we were not getting data from the previous feedback page after submit
-        tellus_more_page.classList.toggle("show")
+        console.log(click)
+        if (elem.classList.contains("emojiTransform")) {
+            feeback_page_emoji=elem.children[0].alt
+           }
+           else {
+               for (let i = 0; i < feedback_emoji.length; i++) {
+                   feedback_emoji[i].classList.remove("emojiTransform")
+               }
+               elem.classList.add("emojiTransform")
+               feeback_page_emoji=elem.children[0].alt
+           }
+           if(bool==true){
+            setTimeout(() => {
+                feedback_page_hide.classList.toggle("show")        //merging feedback and tellus_more_page as we were not getting data from the previous feedback page after submit
+                tellus_more_page.classList.toggle("show")
+            }, 300);
+
+           }
+
     })
 });
-
-
-
-
-
-
 
 
 //submit button styling adding functionalty on user inputs
 
 user_info.forEach(elem => {
-console.log(elem);
+    console.log(elem);
     elem.addEventListener('keyup', (e) => {
         if (user_name_data.value != ' ' && user_number_data.value != ' ') {
             e.preventDefault()
@@ -143,15 +171,15 @@ sbmbutton.addEventListener('click', (e) => {
         }
     }
     getData()                     //transfering data to database
-    
-    user_name_data.value = ' ' 
-    user_number_data.value = ' '
+
     //unchecking radio buttons and empty user inputs
+    user_name_data.value = ' '
+    user_number_data.value = ' '
     for (const radioButton of radioButtons) {
-        radioButton.checked=false
+        radioButton.checked = false
     }
     for (const radioButton of radioButtons2) {
-        radioButton.checked=false
+        radioButton.checked = false
     }
     setTimeout(() => {
         window.location.href = 'thanku.html';
@@ -177,21 +205,21 @@ no_feedback_submit_button.addEventListener("click", (e) => {
         }
     }
     getData()                      //transfering data to database
-    
-    user_name_data.value = ' ' 
+
+    user_name_data.value = ' '
     user_number_data.value = ' '
     //unchecking radio buttons and empty user inputs
     for (const radioButton of radioButtons) {
-        radioButton.checked=false
+        radioButton.checked = false
     }
     for (const radioButton of radioButtons2) {
-        radioButton.checked=false
-        
+        radioButton.checked = false
+
     }
     setTimeout(() => {
         window.location.href = 'thanku.html';
     }, 100);
-    
+
 })
 
 
@@ -199,13 +227,13 @@ no_feedback_submit_button.addEventListener("click", (e) => {
 
 
 // Connecting supabase to the project
-const sb = supabase.createClient('https://qopwvyhgswjzhujqqbfa.supabase.co', 
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFvcHd2eWhnc3dqemh1anFxYmZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODEzNzUxODksImV4cCI6MTk5Njk1MTE4OX0.kksfMR19xFb5CZkYw9MOb8tFF8p3UE5uAtIPGgT2t4g')
+const sb = supabase.createClient('https://qopwvyhgswjzhujqqbfa.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFvcHd2eWhnc3dqemh1anFxYmZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODEzNzUxODksImV4cCI6MTk5Njk1MTE4OX0.kksfMR19xFb5CZkYw9MOb8tFF8p3UE5uAtIPGgT2t4g')
 
 
 // storing data into the database
 async function getData() {
-    console.log(feeback_page_emoji,user_ciagrette_name,user_did_u_get,user_feed,user_shopping_experience)
+    console.log(feeback_page_emoji, user_ciagrette_name, user_did_u_get, user_feed, user_shopping_experience)
     const { data, error } = await sb
         .from('users_feedback')
         .insert(
@@ -219,5 +247,5 @@ async function getData() {
                 shopping_exp: user_shopping_experience
             }
         )
-   
+
 }
