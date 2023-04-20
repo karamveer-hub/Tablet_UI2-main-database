@@ -35,7 +35,8 @@ console.log(user_name_data.value)
 
 
 //clicking functionalty for selecting one ciagrette and storing the name of ciagrette
-var bool = false;
+var bool = false;     //if both emoji and ciagrette selected then it will move further
+var emoji = false;   //if both emoji and ciagrette selected then it will move further
 let click = 0;
 feeback_img_outline.forEach(elem => {
     elem.addEventListener("click", (e) => {
@@ -47,20 +48,43 @@ feeback_img_outline.forEach(elem => {
             elem.classList.add("outline_selected")
             ciagrette_feedback_name.innerText = `B. How was your experience smoking
             ${elem.alt}? `
+
+            if (emoji == true) {
+                setTimeout(() => {
+                    feedback_page_hide.classList.toggle("show")        //togggling fucntionality of sections of same pages 
+                    tellus_more_page.classList.toggle("show")
+                }, 300);
+            }
         }
         else {
             if (click == 1) {
 
                 if (elem.classList.contains("outline_selected")) {
+                    if (emoji == true) {
+                        setTimeout(() => {
+                            feedback_page_hide.classList.toggle("show")        //togggling fucntionality of sections of same pages 
+                            tellus_more_page.classList.toggle("show")
+                        }, 300);
+                    }
                 }
                 else {
                     for (let i = 0; i < feeback_img_outline.length; i++) {
                         feeback_img_outline[i].classList.remove("outline_selected")
                     }
+                    for (let i = 0; i < feedback_emoji.length; i++) {
+                        feedback_emoji[i].classList.remove("emojiTransform")
+                        emoji=false;
+                    }
                     bool = true;
                     elem.classList.add("outline_selected")
                     ciagrette_feedback_name.innerText = `B. How was your experience smoking
                      ${elem.alt}? `
+                    if (emoji == true) {
+                        setTimeout(() => {
+                            feedback_page_hide.classList.toggle("show")        //togggling fucntionality of sections of same pages 
+                            tellus_more_page.classList.toggle("show")
+                        }, 300);
+                    }
                 }
             }
         }
@@ -114,7 +138,7 @@ shopping_experience.forEach(elem => {
 
 feedback_emoji.forEach(elem => {
     elem.addEventListener("click", (e) => {
-        console.log(click)
+        emoji = true;
         if (elem.classList.contains("emojiTransform")) {
             feeback_page_emoji = elem.children[0].alt
         }
