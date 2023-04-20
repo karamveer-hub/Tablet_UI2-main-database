@@ -31,19 +31,18 @@ let user_shopping_experience;
 let user_ciagrette_name;
 var feeback_page_emoji;
 
-
-
+console.log(user_name_data.value)
 
 
 //clicking functionalty for selecting one ciagrette and storing the name of ciagrette
-var bool=false;
-let click =0 ;
+var bool = false;
+let click = 0;
 feeback_img_outline.forEach(elem => {
     elem.addEventListener("click", (e) => {
         e.preventDefault()
         user_ciagrette_name = elem.alt                     //storing ciagrette name of the customer
         if (click == 0 || click < 1) {
-            bool=true;
+            bool = true;
             click++;
             elem.classList.add("outline_selected")
             ciagrette_feedback_name.innerText = `B. How was your experience smoking
@@ -58,7 +57,7 @@ feeback_img_outline.forEach(elem => {
                     for (let i = 0; i < feeback_img_outline.length; i++) {
                         feeback_img_outline[i].classList.remove("outline_selected")
                     }
-                    bool=true;
+                    bool = true;
                     elem.classList.add("outline_selected")
                     ciagrette_feedback_name.innerText = `B. How was your experience smoking
                      ${elem.alt}? `
@@ -99,14 +98,14 @@ feed_yes.forEach(elem => {
 shopping_experience.forEach(elem => {
     elem.addEventListener("click", (e) => {
         if (elem.classList.contains("emojiTransform")) {
-         user_shopping_experience=elem.children[0].alt
+            user_shopping_experience = elem.children[0].alt
         }
         else {
             for (let i = 0; i < shopping_experience.length; i++) {
                 shopping_experience[i].classList.remove("emojiTransform")
             }
             elem.classList.add("emojiTransform")
-            user_shopping_experience=elem.children[0].alt
+            user_shopping_experience = elem.children[0].alt
         }
 
     })
@@ -117,22 +116,22 @@ feedback_emoji.forEach(elem => {
     elem.addEventListener("click", (e) => {
         console.log(click)
         if (elem.classList.contains("emojiTransform")) {
-            feeback_page_emoji=elem.children[0].alt
-           }
-           else {
-               for (let i = 0; i < feedback_emoji.length; i++) {
-                   feedback_emoji[i].classList.remove("emojiTransform")
-               }
-               elem.classList.add("emojiTransform")
-               feeback_page_emoji=elem.children[0].alt
-           }
-           if(bool==true){
+            feeback_page_emoji = elem.children[0].alt
+        }
+        else {
+            for (let i = 0; i < feedback_emoji.length; i++) {
+                feedback_emoji[i].classList.remove("emojiTransform")
+            }
+            elem.classList.add("emojiTransform")
+            feeback_page_emoji = elem.children[0].alt
+        }
+        if (bool == true) {
             setTimeout(() => {
                 feedback_page_hide.classList.toggle("show")        //merging feedback and tellus_more_page as we were not getting data from the previous feedback page after submit
                 tellus_more_page.classList.toggle("show")
             }, 300);
 
-           }
+        }
 
     })
 });
@@ -141,50 +140,51 @@ feedback_emoji.forEach(elem => {
 //submit button styling adding functionalty on user inputs
 
 user_info.forEach(elem => {
-    console.log(elem);
     elem.addEventListener('keyup', (e) => {
-        if (user_name_data.value != ' ' && user_number_data.value != ' ') {
-            e.preventDefault()
+        console.log(elem.value)
+        if (user_name_data.value != '' && user_number_data.value != '') {
             sbmbutton.style.background = " linear-gradient(270deg, #447AEC 0%, #2A5CDC 100%"
+
+            // submitting data with customer name or without customer name
+
+            sbmbutton.addEventListener('click', (e) => {
+                e.preventDefault()
+                for (const radioButton of radioButtons) {
+                    if (radioButton.checked) {
+                        user_did_u_get = radioButton.value;
+                        break;
+                    }
+                }
+                for (const radioButton of radioButtons2) {
+                    if (radioButton.checked) {
+                        user_feed = radioButton.value;
+                        break;
+                    }
+                }
+                getData()                     //transfering data to database
+
+                //unchecking radio buttons and empty user inputs
+                user_name_data.value = ' '
+                user_number_data.value = ' '
+                for (const radioButton of radioButtons) {
+                    radioButton.checked = false
+                }
+                for (const radioButton of radioButtons2) {
+                    radioButton.checked = false
+                }
+                setTimeout(() => {
+                    window.location.href = 'thanku.html';
+                }, 100);
+            })
+
+
+
         }
     })
 })
 
 
 
-
-
-// submitting data with customer name or without customer name
-
-sbmbutton.addEventListener('click', (e) => {
-    e.preventDefault()
-    for (const radioButton of radioButtons) {
-        if (radioButton.checked) {
-            user_did_u_get = radioButton.value;
-            break;
-        }
-    }
-    for (const radioButton of radioButtons2) {
-        if (radioButton.checked) {
-            user_feed = radioButton.value;
-            break;
-        }
-    }
-    getData()                     //transfering data to database
-
-    //unchecking radio buttons and empty user inputs
-    user_name_data.value = ' '
-    user_number_data.value = ' '
-    for (const radioButton of radioButtons) {
-        radioButton.checked = false
-    }
-    for (const radioButton of radioButtons2) {
-        radioButton.checked = false
-    }
-    setTimeout(() => {
-        window.location.href = 'thanku.html';
-    }, 100);
-})
 
 
 

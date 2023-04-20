@@ -165,9 +165,9 @@
                     <h2>D. Please enter your contact details</h2>
                     <div class="first_div display_flex">
                         <div class="display_flex">
-                            <input type="text" class="user_info" id="user_name" value=" " placeholder="Enter Your Name">
-                            <input type="text" class="user_info" id="user_number" value=" "
-                                placeholder="Enter Your Contact Number">
+                            <input type="text" class="user_info" id="user_name" value="" autocomplete="off" placeholder="Enter Your Name" required>
+                            <input type="tel" class="user_info" id="user_number" value=""  autocomplete="off" 
+                                placeholder="Enter Your Contact Number" pattern="[0-9]{10}" required>
                         </div>
                     </div>
                     <div class=" buttonDiv display_flex">

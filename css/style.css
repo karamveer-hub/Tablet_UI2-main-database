@@ -612,16 +612,12 @@ a {
 }
 
 .form .maindiv:nth-of-type(4) .first_div div input::placeholder {
-    color: white;
+    color: #000000 50%;
 }
 
 .contactDetails,
 #no_feedback_submit {
     display: none;
-}
-
-.form .inside_div .first_div input::placeholder {
-    color: #000000 50%;
 }
 
 .form .inside_div {
